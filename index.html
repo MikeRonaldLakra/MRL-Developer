@@ -1,1 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MRL Developer — We Build Digital Futures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0a0a0a;
+  --ink2:#1a1a1a;
+  --ink3:#2a2a2a;
+  --off:#f5f2ec;
+  --acid:#c8f72a;
+  --acid2:#a8e000;
+  --muted:#888;
+  --red:#ff3c3c;
+  --blue:#1a6dff;
+  --teal:#00d4aa;
+  --r:4px;
+  --r2:12px;
+  --r3:24px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:var(--off);
+  font-family:'Syne',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
 
+/* CUSTOM CURSOR */
+.cursor{position:fixed;width:12px;height:12px;background:var(--acid);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,background 0.3s;mix-blend-mode:difference}
+.cursor-trail{position:fixed;width:40px;height:40px;border:1px solid rgba(200,247,42,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0.12s ease,top 0.12s ease,width 0.3s,height 0.3s}
+
+/* NOISE OVERLAY */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:0.6;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:20px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(245,242,236,0.06);
+  backdrop-filter:blur(20px);
+  background:rgba(10,10,10,0.7);
+}
+.nav-logo{
+  font-size:22px;font-weight:800;letter-spacing:-0.5px;
+  display:flex;align-items:center;gap:8px;
+}
+.logo-mark{
+  width:32px;height:32px;
+  background:var(--acid);
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink);font-size:13px;font-weight:800;
+}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  color:rgba(245,242,236,0.6);text-decoration:none;
+  font-size:13px;font-weight:500;letter-spacing:0.5px;
+  text-transform:uppercase;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--acid)}
+.nav-cta{
+  background:var(--acid);color:var(--ink);
+  padding:10px 24px;border-radius:100px;
+  font-size:13px;font-weight:700;text-decoration:none;
+  letter-spacing:0.3px;transition:transform 0.2s,box-shadow 0.2s;
+  text-transform:uppercase;
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,247,42,0.3)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:24px;height:2px;background:var(--off);display:block;transition:all 0.3s}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  padding:180px 60px 100px;
+  position:relative;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(200,247,42,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,247,42,0.04) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
+}
+.hero-orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(120px);
+  pointer-events:none;
+}
+.orb1{width:600px;height:600px;background:rgba(200,247,42,0.07);top:-100px;right:-100px;animation:drift1 12s ease-in-out infinite alternate}
+.orb2{width:400px;height:400px;background:rgba(26,109,255,0.06);bottom:0;left:-100px;animation:drift2 15s ease-in-out infinite alternate}
+@keyframes drift1{from{transform:translate(0,0) scale(1)}to{transform:translate(-50px,80px) scale(1.15)}}
+@keyframes drift2{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,-40px) scale(1.2)}}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(200,247,42,0.08);
+  border:1px solid rgba(200,247,42,0.2);
+  padding:6px 16px;border-radius:100px;
+  font-size:12px;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--acid);
+  margin-bottom:36px;width:fit-content;
+}
+.eyebrow-dot{width:6px;height:6px;background:var(--acid);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero-headline{
+  font-size:clamp(52px,8vw,112px);
+  font-weight:800;
+  line-height:0.95;
+  letter-spacing:-3px;
+  margin-bottom:20px;
+}
+.hero-headline em{
+  font-style:normal;
+  font-family:'Instrument Serif',serif;
+  color:var(--acid);
+  letter-spacing:-2px;
+}
+.hero-sub{
+  max-width:520px;
+  font-size:18px;font-weight:400;line-height:1.6;
+  color:rgba(245,242,236,0.55);
+  margin-bottom:60px;
+}
+.hero-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn-primary{
+  background:var(--acid);color:var(--ink);
+  padding:16px 36px;border-radius:100px;
+  font-size:15px;font-weight:700;text-decoration:none;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:transform 0.2s,box-shadow 0.2s;
+  letter-spacing:0.2px;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(200,247,42,0.35)}
+.btn-primary svg{transition:transform 0.2s}
+.btn-primary:hover svg{transform:translate(4px,-4px)}
+.btn-ghost{
+  color:var(--off);padding:16px 36px;border-radius:100px;
+  font-size:15px;font-weight:600;text-decoration:none;
+  border:1px solid rgba(245,242,236,0.2);
+  display:inline-flex;align-items:center;gap:10px;
+  transition:border-color 0.2s,background 0.2s;
+}
+.btn-ghost:hover{border-color:rgba(245,242,236,0.5);background:rgba(245,242,236,0.05)}
+
+.hero-stats{
+  position:absolute;right:60px;bottom:80px;
+  display:flex;flex-direction:column;gap:30px;align-items:flex-end;
+}
+.stat-item{text-align:right}
+.stat-num{
+  font-size:48px;font-weight:800;
+  line-height:1;letter-spacing:-2px;
+  color:var(--acid);
+}
+.stat-label{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+
+.scroll-indicator{
+  position:absolute;left:60px;bottom:80px;
+  display:flex;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);
+}
+.scroll-line{width:60px;height:1px;background:var(--muted);position:relative;overflow:hidden}
+.scroll-line::after{content:'';position:absolute;inset:0;background:var(--acid);transform:translateX(-100%);animation:scanline 2.5s ease-in-out infinite}
+@keyframes scanline{0%{transform:translateX(-100%)}50%,100%{transform:translateX(100%)}}
+
+/* MARQUEE */
+.marquee-section{
+  border-top:1px solid rgba(245,242,236,0.08);
+  border-bottom:1px solid rgba(245,242,236,0.08);
+  padding:18px 0;overflow:hidden;
+  background:rgba(200,247,42,0.02);
+}
+.marquee-track{
+  display:flex;gap:60px;white-space:nowrap;
+  animation:marquee 25s linear infinite;
+}
+.marquee-track span{
+  font-family:'DM Mono',monospace;
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(245,242,236,0.3);display:inline-flex;align-items:center;gap:60px;
+}
+.marquee-track span::after{content:'✦';color:var(--acid);font-size:10px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTION COMMONS */
+section{padding:120px 60px;position:relative}
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--acid);margin-bottom:20px;display:block;
+}
+.section-title{
+  font-size:clamp(36px,5vw,64px);font-weight:800;
+  letter-spacing:-2px;line-height:1.05;
+}
+.section-title em{font-style:normal;font-family:'Instrument Serif',serif;font-style:italic;color:rgba(245,242,236,0.5)}
+
+/* SERVICES */
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  margin-top:80px;border:2px solid rgba(245,242,236,0.06);
+}
+.service-card{
+  padding:48px 40px;
+  border:1px solid rgba(245,242,236,0.06);
+  position:relative;overflow:hidden;
+  transition:background 0.4s;
+  cursor:pointer;
+}
+.service-card::before{
+  content:'';position:absolute;inset:0;
+  background:var(--acid);transform:translateY(101%);
+  transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.service-card:hover::before{transform:translateY(0)}
+.service-card:hover .svc-num,
+.service-card:hover .svc-title,
+.service-card:hover .svc-desc,
+.service-card:hover .svc-tags span,
+.service-card:hover .svc-arrow{color:var(--ink)}
+.service-card:hover .svc-tags span{border-color:rgba(10,10,10,0.2);background:rgba(10,10,10,0.08)}
+.service-inner{position:relative;z-index:1}
+.svc-num{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--muted);letter-spacing:3px;margin-bottom:40px;
+  display:block;transition:color 0.3s;
+}
+.svc-icon{
+  width:52px;height:52px;margin-bottom:28px;
+  border:1px solid rgba(245,242,236,0.15);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+}
+.svc-title{font-size:24px;font-weight:700;letter-spacing:-0.5px;margin-bottom:16px;transition:color 0.3s}
+.svc-desc{font-size:14px;line-height:1.7;color:var(--muted);margin-bottom:28px;transition:color 0.3s}
+.svc-tags{display:flex;flex-wrap:wrap;gap:8px}
+.svc-tags span{
+  font-size:11px;font-weight:600;letter-spacing:0.5px;
+  padding:5px 12px;border-radius:100px;
+  border:1px solid rgba(245,242,236,0.15);
+  color:rgba(245,242,236,0.5);transition:all 0.3s;
+  text-transform:uppercase;
+}
+.svc-arrow{position:absolute;top:48px;right:40px;font-size:20px;color:var(--muted);transition:color 0.3s,transform 0.3s}
+.service-card:hover .svc-arrow{transform:translate(4px,-4px)}
+
+/* PROCESS */
+.process-section{background:var(--ink2)}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:80px;position:relative}
+.process-steps::before{
+  content:'';position:absolute;top:40px;left:10%;right:10%;
+  height:1px;background:linear-gradient(90deg,transparent,rgba(200,247,42,0.3),transparent);
+}
+.step-card{padding:48px 32px 40px;text-align:center;position:relative}
+.step-dot{
+  width:80px;height:80px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 32px;position:relative;
+  font-size:20px;
+}
+.step-dot::before{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:1px solid rgba(200,247,42,0.2);
+}
+.step-dot.acid{background:var(--acid);color:var(--ink)}
+.step-dot.outline{background:transparent;border:1px solid rgba(200,247,42,0.3);color:var(--acid)}
+.step-num{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--acid);letter-spacing:3px;margin-bottom:16px;display:block;
+}
+.step-title{font-size:18px;font-weight:700;margin-bottom:12px}
+.step-desc{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* PORTFOLIO */
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:80px}
+.work-card{
+  border-radius:16px;overflow:hidden;position:relative;
+  aspect-ratio:4/3;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:36px;
+  cursor:pointer;
+}
+.work-card.tall{grid-row:span 2;aspect-ratio:unset}
+.work-card-bg{
+  position:absolute;inset:0;z-index:0;
+  transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.work-card:hover .work-card-bg{transform:scale(1.04)}
+.work-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);
+}
+.wc1 .work-card-bg{background:linear-gradient(135deg,#0f1923 0%,#1a3a5c 50%,#0d2a42 100%)}
+.wc2 .work-card-bg{background:linear-gradient(135deg,#1a0a2e 0%,#3d1565 50%,#1a0a2e 100%)}
+.wc3 .work-card-bg{background:linear-gradient(135deg,#0a2015 0%,#0d4a28 50%,#083316 100%)}
+.wc4 .work-card-bg{background:linear-gradient(135deg,#1f1400 0%,#4a3000 50%,#2d1e00 100%)}
+.work-card-content{position:relative;z-index:1}
+.work-tag{
+  display:inline-block;font-size:11px;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;
+  background:rgba(200,247,42,0.15);color:var(--acid);
+  border:1px solid rgba(200,247,42,0.3);
+  padding:5px 14px;border-radius:100px;margin-bottom:14px;
+}
+.work-title{font-size:22px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px}
+.work-desc{font-size:13px;color:rgba(245,242,236,0.6);line-height:1.5}
+.work-arrow{
+  position:absolute;top:28px;right:28px;z-index:1;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(245,242,236,0.1);border:1px solid rgba(245,242,236,0.2);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  opacity:0;transform:translate(-4px,4px);
+  transition:opacity 0.3s,transform 0.3s;
+}
+.work-card:hover .work-arrow{opacity:1;transform:translate(0,0)}
+/* decorative shapes in cards */
+.wc1 .deco{position:absolute;top:30px;left:40px;width:100px;height:100px;border-radius:50%;border:1px solid rgba(255,255,255,0.08)}
+.wc1 .deco2{position:absolute;top:60px;left:70px;width:60px;height:60px;border-radius:50%;background:rgba(26,109,255,0.15)}
+.wc2 .deco{position:absolute;top:20px;left:20px;right:20px;bottom:120px;border:1px solid rgba(255,255,255,0.05);border-radius:8px}
+.wc3 .deco{position:absolute;top:40px;right:40px;font-size:60px;opacity:0.15}
+.wc4 .deco{position:absolute;top:30px;left:30px;font-size:50px;opacity:0.1}
+
+/* TECH STACK */
+.tech-section{background:var(--ink)}
+.tech-scroll{
+  display:flex;gap:16px;flex-wrap:wrap;
+  margin-top:60px;
+}
+.tech-pill{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 22px;border-radius:100px;
+  border:1px solid rgba(245,242,236,0.1);
+  font-size:14px;font-weight:500;
+  transition:all 0.2s;cursor:default;
+}
+.tech-pill:hover{border-color:rgba(200,247,42,0.4);background:rgba(200,247,42,0.05)}
+.tech-dot{width:8px;height:8px;border-radius:50%}
+.t-react .tech-dot{background:#61dafb}
+.t-node .tech-dot{background:#6da55f}
+.t-python .tech-dot{background:#3572a5}
+.t-next .tech-dot{background:#fff}
+.t-ts .tech-dot{background:#3178c6}
+.t-aws .tech-dot{background:#ff9900}
+.t-flutter .tech-dot{background:#54c5f8}
+.t-psql .tech-dot{background:#336791}
+.t-mongo .tech-dot{background:#47a248}
+.t-docker .tech-dot{background:#2496ed}
+.t-figma .tech-dot{background:#a259ff}
+.t-gql .tech-dot{background:#e535ab}
+
+/* TESTIMONIALS */
+.testi-section{background:var(--ink2)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px}
+.testi-card{
+  background:rgba(245,242,236,0.03);border:1px solid rgba(245,242,236,0.08);
+  border-radius:16px;padding:36px;position:relative;
+  transition:transform 0.3s,border-color 0.3s;
+}
+.testi-card:hover{transform:translateY(-6px);border-color:rgba(200,247,42,0.2)}
+.testi-stars{color:var(--acid);font-size:14px;letter-spacing:2px;margin-bottom:20px}
+.testi-text{font-size:15px;line-height:1.7;color:rgba(245,242,236,0.75);margin-bottom:28px;font-style:italic;font-family:'Instrument Serif',serif}
+.testi-author{display:flex;align-items:center;gap:14px}
+.testi-avatar{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:var(--ink);
+}
+.testi-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.testi-role{font-size:12px;color:var(--muted)}
+.quote-mark{
+  position:absolute;top:28px;right:28px;
+  font-size:48px;color:rgba(200,247,42,0.1);
+  font-family:'Instrument Serif',serif;line-height:1;
+}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:80px}
+.price-card{
+  border-radius:20px;padding:44px 36px;position:relative;overflow:hidden;
+  border:1px solid rgba(245,242,236,0.08);
+  transition:transform 0.3s;
+}
+.price-card:hover{transform:translateY(-8px)}
+.price-card.featured{
+  background:var(--acid);color:var(--ink);
+  border-color:transparent;
+}
+.price-card.featured .price-desc,
+.price-card.featured .price-feature{color:rgba(10,10,10,0.65)}
+.price-card.featured .price-feature::before{background:var(--ink)}
+.price-eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:block;color:var(--muted)}
+.price-card.featured .price-eyebrow{color:rgba(10,10,10,0.5)}
+.price-name{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px}
+.price-desc{font-size:14px;color:var(--muted);margin-bottom:32px;line-height:1.5}
+.price-amount{font-size:48px;font-weight:800;letter-spacing:-2px;margin-bottom:4px}
+.price-amount span{font-size:16px;font-weight:500;letter-spacing:0;vertical-align:top;margin-top:12px;display:inline-block}
+.price-period{font-size:13px;color:var(--muted);margin-bottom:36px}
+.price-card.featured .price-period{color:rgba(10,10,10,0.5)}
+.price-divider{height:1px;background:rgba(245,242,236,0.1);margin-bottom:28px}
+.price-card.featured .price-divider{background:rgba(10,10,10,0.15)}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.price-feature{font-size:14px;color:rgba(245,242,236,0.7);display:flex;align-items:center;gap:10px}
+.price-feature::before{content:'';width:16px;height:16px;border-radius:50%;background:rgba(200,247,42,0.3);flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8l3.5 3.5L13 5' stroke='%23c8f72a' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-size:contain}
+.price-btn{
+  display:block;text-align:center;padding:14px;border-radius:100px;
+  font-size:14px;font-weight:700;text-decoration:none;
+  transition:all 0.2s;
+}
+.price-btn-dark{background:var(--ink);color:var(--acid);border:none}
+.price-btn-dark:hover{background:var(--ink3)}
+.price-btn-outline{background:transparent;color:var(--off);border:1px solid rgba(245,242,236,0.2)}
+.price-btn-outline:hover{background:rgba(245,242,236,0.05)}
+
+/* ABOUT / TEAM */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-visual{
+  position:relative;height:560px;
+}
+.about-big-number{
+  font-size:240px;font-weight:800;line-height:1;
+  letter-spacing:-10px;color:rgba(200,247,42,0.06);
+  position:absolute;top:-20px;left:-20px;
+  font-family:'Instrument Serif',serif;
+  pointer-events:none;
+}
+.about-card-stack{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.about-main-card{
+  width:300px;
+  background:var(--ink2);border:1px solid rgba(245,242,236,0.1);
+  border-radius:20px;padding:32px;
+  position:absolute;
+}
+.about-card-a{transform:rotate(-4deg) translate(-30px,20px);z-index:1}
+.about-card-b{transform:rotate(3deg) translate(30px,-20px);z-index:2;background:rgba(200,247,42,0.07)}
+.about-card-c{z-index:3;background:var(--ink2);box-shadow:0 30px 80px rgba(0,0,0,0.5)}
+.about-card-icon{font-size:36px;margin-bottom:16px}
+.about-card-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.about-card-meta{font-size:13px;color:var(--muted);line-height:1.5}
+.about-meta-row{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.about-meta-badge{
+  padding:4px 12px;border-radius:100px;font-size:11px;font-weight:600;
+  background:rgba(200,247,42,0.1);color:var(--acid);border:1px solid rgba(200,247,42,0.2);
+  letter-spacing:0.5px;text-transform:uppercase;
+}
+.about-text .section-title{margin-bottom:28px}
+.about-lead{font-size:17px;line-height:1.7;color:rgba(245,242,236,0.65);margin-bottom:24px}
+.about-values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.val-item{
+  padding:20px;border-radius:12px;
+  background:rgba(245,242,236,0.03);border:1px solid rgba(245,242,236,0.07);
+}
+.val-icon{font-size:20px;margin-bottom:10px}
+.val-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.val-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* CTA STRIP */
+.cta-strip{
+  margin:0 60px;border-radius:24px;
+  background:var(--acid);color:var(--ink);
+  padding:80px 80px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:40px;position:relative;overflow:hidden;
+}
+.cta-strip::before{
+  content:'';position:absolute;right:-80px;top:-80px;
+  width:400px;height:400px;border-radius:50%;
+  background:rgba(0,0,0,0.05);
+}
+.cta-strip::after{
+  content:'';position:absolute;left:-40px;bottom:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(0,0,0,0.04);
+}
+.cta-content{position:relative;z-index:1}
+.cta-title{font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:12px}
+.cta-sub{font-size:16px;color:rgba(10,10,10,0.6);font-weight:500}
+.cta-actions{display:flex;gap:14px;flex-shrink:0;position:relative;z-index:1}
+.btn-ink{
+  background:var(--ink);color:var(--acid);
+  padding:16px 32px;border-radius:100px;
+  font-size:14px;font-weight:700;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-ink:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,0.3)}
+.btn-ink-outline{
+  background:transparent;color:var(--ink);
+  padding:16px 32px;border-radius:100px;
+  font-size:14px;font-weight:700;text-decoration:none;
+  border:2px solid rgba(10,10,10,0.3);
+  transition:background 0.2s;
+}
+.btn-ink-outline:hover{background:rgba(10,10,10,0.08)}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:80px;align-items:start}
+.contact-form{display:flex;flex-direction:column;gap:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:8px}
+.form-label{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.form-input, .form-select, .form-textarea{
+  background:rgba(245,242,236,0.04);
+  border:1px solid rgba(245,242,236,0.1);
+  border-radius:12px;padding:14px 18px;
+  color:var(--off);font-family:'Syne',sans-serif;font-size:15px;
+  outline:none;transition:border-color 0.2s,background 0.2s;
+  width:100%;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus{
+  border-color:rgba(200,247,42,0.4);background:rgba(200,247,42,0.03);
+}
+.form-textarea{resize:vertical;min-height:140px}
+.form-select option{background:var(--ink2)}
+.form-submit{
+  background:var(--acid);color:var(--ink);
+  padding:16px 36px;border-radius:100px;font-size:15px;font-weight:700;
+  border:none;cursor:pointer;display:flex;align-items:center;gap:10px;width:fit-content;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(200,247,42,0.3)}
+.contact-info{display:flex;flex-direction:column;gap:32px}
+.contact-info-item{
+  display:flex;gap:20px;align-items:flex-start;
+  padding:24px;border-radius:14px;
+  border:1px solid rgba(245,242,236,0.07);
+  transition:border-color 0.2s;
+}
+.contact-info-item:hover{border-color:rgba(200,247,42,0.2)}
+.ci-icon{
+  width:48px;height:48px;border-radius:12px;flex-shrink:0;
+  background:rgba(200,247,42,0.1);border:1px solid rgba(200,247,42,0.2);
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.ci-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ci-value{font-size:15px;font-weight:600;color:var(--off)}
+.ci-sub{font-size:13px;color:var(--muted);margin-top:2px}
+
+/* FOOTER */
+footer{
+  border-top:1px solid rgba(245,242,236,0.08);
+  padding:80px 60px 40px;
+}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:80px}
+.footer-brand .nav-logo{margin-bottom:20px}
+.footer-tagline{font-size:14px;color:var(--muted);line-height:1.6;max-width:260px;margin-bottom:32px}
+.footer-social{display:flex;gap:12px}
+.social-btn{
+  width:40px;height:40px;border-radius:10px;
+  border:1px solid rgba(245,242,236,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;text-decoration:none;
+  transition:border-color 0.2s,background 0.2s;
+}
+.social-btn:hover{border-color:rgba(200,247,42,0.4);background:rgba(200,247,42,0.06)}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--off);margin-bottom:24px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:14px}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s}
+.footer-links a:hover{color:var(--acid)}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid rgba(245,242,236,0.06);padding-top:32px;
+  flex-wrap:wrap;gap:12px;
+}
+.footer-copy{font-size:13px;color:var(--muted)}
+.footer-copy span{color:var(--acid)}
+.footer-bottom-links{display:flex;gap:28px}
+.footer-bottom-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-bottom-links a:hover{color:var(--off)}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(40px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-up.delay-1{transition-delay:0.1s}
+.fade-up.delay-2{transition-delay:0.2s}
+.fade-up.delay-3{transition-delay:0.3s}
+.fade-up.delay-4{transition-delay:0.4s}
+
+/* MOBILE MENU */
+.mobile-menu{
+  position:fixed;inset:0;z-index:490;
+  background:var(--ink);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:32px;
+  transform:translateX(100%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.mobile-menu.open{transform:translateX(0)}
+.mobile-menu a{
+  font-size:32px;font-weight:800;letter-spacing:-1px;
+  color:var(--off);text-decoration:none;
+  transition:color 0.2s;
+}
+.mobile-menu a:hover{color:var(--acid)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav{padding:16px 30px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  section{padding:80px 30px}
+  .hero{padding:140px 30px 80px}
+  .hero-stats{right:30px}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .process-steps{grid-template-columns:1fr 1fr;gap:20px}
+  .process-steps::before{display:none}
+  .work-grid{grid-template-columns:1fr}
+  .work-card.tall{grid-row:span 1;aspect-ratio:4/3}
+  .testi-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .about-wrap{grid-template-columns:1fr}
+  .about-visual{height:300px}
+  .about-big-number{font-size:120px}
+  .about-main-card{width:220px}
+  .cta-strip{margin:0 30px;padding:50px 40px;flex-direction:column;align-items:flex-start}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+  .hero-stats{position:static;flex-direction:row;flex-wrap:wrap;margin-top:60px}
+  .scroll-indicator{display:none}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .services-grid{grid-template-columns:1fr}
+  .hero-headline{font-size:42px;letter-spacing:-1.5px}
+  .cta-strip{padding:40px 28px}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursor-trail"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#work" onclick="closeMenu()">Work</a>
+  <a href="#process" onclick="closeMenu()">Process</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-mark">M</div>
+    MRL Developer
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta" style="display:flex;align-items:center;gap:8px">Let's Build ↗</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  
+  <div class="hero-eyebrow">
+    <span class="eyebrow-dot"></span>
+    Available for New Projects · 2025
+  </div>
+  
+  <h1 class="hero-headline">
+    We Craft<br>
+    <em>Digital</em><br>
+    Experiences
+  </h1>
+  
+  <p class="hero-sub">MRL Developer builds software that moves businesses forward — from pixel-perfect interfaces to powerful backend systems. Based in Kolkata, working worldwide.</p>
+  
+  <div class="hero-actions">
+    <a href="#work" class="btn-primary">
+      View Our Work
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H6M13 3V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#contact" class="btn-ghost">Start a Project</a>
+  </div>
+  
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num" data-count="50">0</div>
+      <div class="stat-label">Projects Delivered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-count="4">0</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-count="30">0</div>
+      <div class="stat-label">Happy Clients</div>
+    </div>
+  </div>
+  
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    Scroll to Explore
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>Web Development</span>
+    <span>Mobile Apps</span>
+    <span>UI/UX Design</span>
+    <span>API Integration</span>
+    <span>Cloud Deployment</span>
+    <span>E-Commerce</span>
+    <span>SaaS Products</span>
+    <span>AI Solutions</span>
+    <span>Web Development</span>
+    <span>Mobile Apps</span>
+    <span>UI/UX Design</span>
+    <span>API Integration</span>
+    <span>Cloud Deployment</span>
+    <span>E-Commerce</span>
+    <span>SaaS Products</span>
+    <span>AI Solutions</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <span class="section-label fade-up">// What We Do</span>
+  <h2 class="section-title fade-up delay-1">Services Built <em>for</em><br>Real Results</h2>
+  
+  <div class="services-grid">
+    <div class="service-card fade-up delay-1">
+      <div class="service-inner">
+        <span class="svc-num">01</span>
+        <div class="svc-icon">🌐</div>
+        <h3 class="svc-title">Web Development</h3>
+        <p class="svc-desc">Full-stack web applications built with modern frameworks. Fast, secure, and scalable — designed to grow with your business.</p>
+        <div class="svc-tags">
+          <span>React</span><span>Next.js</span><span>Node</span><span>PostgreSQL</span>
+        </div>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+    
+    <div class="service-card fade-up delay-2">
+      <div class="service-inner">
+        <span class="svc-num">02</span>
+        <div class="svc-icon">📱</div>
+        <h3 class="svc-title">Mobile Apps</h3>
+        <p class="svc-desc">Native-quality iOS and Android apps with Flutter. One codebase, two platforms, zero compromise on performance or design.</p>
+        <div class="svc-tags">
+          <span>Flutter</span><span>Dart</span><span>Firebase</span><span>REST APIs</span>
+        </div>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+    
+    <div class="service-card fade-up delay-3">
+      <div class="service-inner">
+        <span class="svc-num">03</span>
+        <div class="svc-icon">🎨</div>
+        <h3 class="svc-title">UI/UX Design</h3>
+        <p class="svc-desc">Interfaces that convert. We design with user psychology in mind — every interaction deliberate, every screen purposeful.</p>
+        <div class="svc-tags">
+          <span>Figma</span><span>Prototyping</span><span>Research</span><span>Design Systems</span>
+        </div>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+    
+    <div class="service-card fade-up delay-1">
+      <div class="service-inner">
+        <span class="svc-num">04</span>
+        <div class="svc-icon">🛒</div>
+        <h3 class="svc-title">E-Commerce</h3>
+        <p class="svc-desc">Online stores built to sell. From product discovery to checkout — every step optimised for conversion and maximum revenue.</p>
+        <div class="svc-tags">
+          <span>Custom</span><span>Shopify</span><span>WooCommerce</span><span>Payments</span>
+        </div>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+    
+    <div class="service-card fade-up delay-2">
+      <div class="service-inner">
+        <span class="svc-num">05</span>
+        <div class="svc-icon">☁️</div>
+        <h3 class="svc-title">Cloud & DevOps</h3>
+        <p class="svc-desc">Production-ready deployment on AWS, GCP, or Vercel. CI/CD pipelines, monitoring, auto-scaling — infrastructure that never sleeps.</p>
+        <div class="svc-tags">
+          <span>AWS</span><span>Docker</span><span>CI/CD</span><span>Monitoring</span>
+        </div>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+    
+    <div class="service-card fade-up delay-3">
+      <div class="service-inner">
+        <span class="svc-num">06</span>
+        <div class="svc-icon">🤖</div>
+        <h3 class="svc-title">AI Integration</h3>
+        <p class="svc-desc">Embed the power of AI directly into your product. Chatbots, recommendation engines, automation — built for real business impact.</p>
+        <div class="svc-tags">
+          <span>OpenAI</span><span>LangChain</span><span>Python</span><span>Vector DBs</span>
+        </div>
+      </div>
+      <span class="svc-arrow">↗</span>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work" style="background:var(--ink2)">
+  <span class="section-label fade-up">// Selected Work</span>
+  <h2 class="section-title fade-up delay-1">Projects We're <em>Proud</em> Of</h2>
+  
+  <div class="work-grid" style="margin-top:80px">
+    <div class="work-card wc1 tall fade-up delay-1">
+      <div class="work-card-bg"></div>
+      <div class="deco"></div>
+      <div class="deco2"></div>
+      <span class="work-arrow">↗</span>
+      <div class="work-card-content">
+        <span class="work-tag">Web App · SaaS</span>
+        <h3 class="work-title">InsuranceIQ Platform</h3>
+        <p class="work-desc">Bajaj Life advisor portal with real-time calculators, plan comparators, and WhatsApp CRM integration</p>
+      </div>
+    </div>
+    
+    <div class="work-card wc2 fade-up delay-2">
+      <div class="work-card-bg"></div>
+      <div class="deco"></div>
+      <span class="work-arrow">↗</span>
+      <div class="work-card-content">
+        <span class="work-tag">Hospitality · Booking</span>
+        <h3 class="work-title">HI5 Club Siliguri</h3>
+        <p class="work-desc">Cinematic venue website with live event management, gallery, and table reservation system</p>
+      </div>
+    </div>
+    
+    <div class="work-card wc3 fade-up delay-3">
+      <div class="work-card-bg"></div>
+      <div class="deco">🛒</div>
+      <span class="work-arrow">↗</span>
+      <div class="work-card-content">
+        <span class="work-tag">E-Commerce · Mobile</span>
+        <h3 class="work-title">FreshMart App</h3>
+        <p class="work-desc">Flutter grocery app with AI-powered recommendations and 30-minute delivery tracking</p>
+      </div>
+    </div>
+    
+    <div class="work-card wc4 fade-up delay-4">
+      <div class="work-card-bg"></div>
+      <div class="deco">📊</div>
+      <span class="work-arrow">↗</span>
+      <div class="work-card-content">
+        <span class="work-tag">Analytics · Dashboard</span>
+        <h3 class="work-title">RetailIQ Dashboard</h3>
+        <p class="work-desc">Real-time business intelligence dashboard processing 1M+ daily events with live alerts</p>
+      </div>
+    </div>
+  </div>
+  
+  <div style="text-align:center;margin-top:60px">
+    <a href="#contact" class="btn-ghost fade-up">View Full Portfolio →</a>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="process-section">
+  <span class="section-label fade-up">// How We Work</span>
+  <h2 class="section-title fade-up delay-1">Our Battle-Tested <em>Process</em></h2>
+  
+  <div class="process-steps">
+    <div class="step-card fade-up delay-1">
+      <div class="step-dot acid">🔍</div>
+      <span class="step-num">01</span>
+      <h3 class="step-title">Discovery</h3>
+      <p class="step-desc">Deep-dive into your business goals, users, and technical requirements. We ask the hard questions first.</p>
+    </div>
+    <div class="step-card fade-up delay-2">
+      <div class="step-dot outline">✏️</div>
+      <span class="step-num">02</span>
+      <h3 class="step-title">Design</h3>
+      <p class="step-desc">Wireframes, prototypes, and pixel-perfect designs. You see it before a single line of code is written.</p>
+    </div>
+    <div class="step-card fade-up delay-3">
+      <div class="step-dot outline">⚙️</div>
+      <span class="step-num">03</span>
+      <h3 class="step-title">Development</h3>
+      <p class="step-desc">Agile sprints with weekly demos. You stay in the loop — no surprises, no delays, no excuses.</p>
+    </div>
+    <div class="step-card fade-up delay-4">
+      <div class="step-dot outline">🚀</div>
+      <span class="step-num">04</span>
+      <h3 class="step-title">Launch & Grow</h3>
+      <p class="step-desc">Rigorous QA, smooth deployment, and ongoing support. We don't disappear after go-live.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section style="padding-top:80px;padding-bottom:80px">
+  <span class="section-label fade-up">// Technology</span>
+  <h2 class="section-title fade-up delay-1">Built With the<br><em>Best</em> in Class</h2>
+  
+  <div class="tech-scroll" style="margin-top:50px">
+    <div class="tech-pill t-react fade-up delay-1"><span class="tech-dot"></span>React</div>
+    <div class="tech-pill t-next fade-up delay-1"><span class="tech-dot"></span>Next.js</div>
+    <div class="tech-pill t-ts fade-up delay-2"><span class="tech-dot"></span>TypeScript</div>
+    <div class="tech-pill t-node fade-up delay-2"><span class="tech-dot"></span>Node.js</div>
+    <div class="tech-pill t-python fade-up delay-3"><span class="tech-dot"></span>Python</div>
+    <div class="tech-pill t-flutter fade-up delay-3"><span class="tech-dot"></span>Flutter</div>
+    <div class="tech-pill t-aws fade-up delay-1"><span class="tech-dot"></span>AWS</div>
+    <div class="tech-pill t-psql fade-up delay-2"><span class="tech-dot"></span>PostgreSQL</div>
+    <div class="tech-pill t-mongo fade-up delay-3"><span class="tech-dot"></span>MongoDB</div>
+    <div class="tech-pill t-docker fade-up delay-1"><span class="tech-dot"></span>Docker</div>
+    <div class="tech-pill t-figma fade-up delay-2"><span class="tech-dot"></span>Figma</div>
+    <div class="tech-pill t-gql fade-up delay-3"><span class="tech-dot"></span>GraphQL</div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section">
+  <span class="section-label fade-up">// Client Voices</span>
+  <h2 class="section-title fade-up delay-1">Don't Take <em>Our</em> Word For It</h2>
+  
+  <div class="testi-grid">
+    <div class="testi-card fade-up delay-1">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"MRL Developer transformed our insurance advisory practice. The platform they built has increased my client conversion rate by 60%. Truly exceptional work."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:var(--acid)">MR</div>
+        <div>
+          <div class="testi-name">Mike Ronald Lakra</div>
+          <div class="testi-role">Bajaj Life Financial Advisor, Kolkata</div>
+        </div>
+      </div>
+      <div class="quote-mark">"</div>
+    </div>
+    
+    <div class="testi-card fade-up delay-2">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Our club website is the most impressive in Siliguri. Clients message us just to compliment the website before they even visit. MRL knows how to make a statement."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:var(--blue)">HF</div>
+        <div>
+          <div class="testi-name">HI5 Management</div>
+          <div class="testi-role">Restaurant & Lounge, Siliguri</div>
+        </div>
+      </div>
+      <div class="quote-mark">"</div>
+    </div>
+    
+    <div class="testi-card fade-up delay-3">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Fast, responsive, and incredibly talented. MRL delivered our e-commerce app ahead of schedule. It's been our best business investment this year."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:var(--teal)">RA</div>
+        <div>
+          <div class="testi-name">Rahul Agarwal</div>
+          <div class="testi-role">Founder, RetailIQ, Kolkata</div>
+        </div>
+      </div>
+      <div class="quote-mark">"</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background:var(--ink)">
+  <span class="section-label fade-up">// Investment</span>
+  <h2 class="section-title fade-up delay-1">Transparent Pricing,<br><em>Zero</em> Surprises</h2>
+  
+  <div class="pricing-grid">
+    <div class="price-card fade-up delay-1">
+      <span class="price-eyebrow">Starter</span>
+      <div class="price-name">Launch</div>
+      <p class="price-desc">Perfect for startups and small businesses ready to establish a strong digital presence.</p>
+      <div class="price-amount"><span>₹</span>25,000</div>
+      <div class="price-period">one-time · starting from</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li class="price-feature">5-page responsive website</li>
+        <li class="price-feature">UI/UX design included</li>
+        <li class="price-feature">Mobile-optimized</li>
+        <li class="price-feature">Basic SEO setup</li>
+        <li class="price-feature">1 month free support</li>
+      </ul>
+      <a href="#contact" class="price-btn price-btn-outline">Get Started →</a>
+    </div>
+    
+    <div class="price-card featured fade-up delay-2">
+      <span class="price-eyebrow">Most Popular</span>
+      <div class="price-name">Growth</div>
+      <p class="price-desc">For businesses that need a powerful web application with backend integrations.</p>
+      <div class="price-amount"><span>₹</span>75,000</div>
+      <div class="price-period">one-time · starting from</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li class="price-feature">Full-stack web application</li>
+        <li class="price-feature">Admin dashboard</li>
+        <li class="price-feature">Database design & setup</li>
+        <li class="price-feature">API integrations</li>
+        <li class="price-feature">3 months free support</li>
+        <li class="price-feature">Performance optimization</li>
+      </ul>
+      <a href="#contact" class="price-btn price-btn-dark">Start Building →</a>
+    </div>
+    
+    <div class="price-card fade-up delay-3">
+      <span class="price-eyebrow">Enterprise</span>
+      <div class="price-name">Scale</div>
+      <p class="price-desc">Custom solutions for complex products — mobile apps, SaaS platforms, AI integrations.</p>
+      <div class="price-amount" style="font-size:36px">Custom</div>
+      <div class="price-period">scoped per project</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li class="price-feature">Mobile app (iOS + Android)</li>
+        <li class="price-feature">Advanced AI/ML features</li>
+        <li class="price-feature">Cloud infrastructure</li>
+        <li class="price-feature">Dedicated project manager</li>
+        <li class="price-feature">6 months support & SLA</li>
+        <li class="price-feature">Source code ownership</li>
+      </ul>
+      <a href="#contact" class="price-btn price-btn-outline">Let's Talk →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--ink2)">
+  <div class="about-wrap">
+    <div class="about-visual fade-up delay-1">
+      <div class="about-big-number">MRL</div>
+      <div class="about-card-stack">
+        <div class="about-main-card about-card-a">
+          <div class="about-card-icon">💡</div>
+          <div class="about-card-title">Idea to Launch</div>
+          <div class="about-card-meta">From concept to production-ready product in weeks, not months.</div>
+        </div>
+        <div class="about-main-card about-card-b">
+          <div class="about-card-icon">🌍</div>
+          <div class="about-card-title">Global Clients</div>
+          <div class="about-card-meta">Working with businesses across India, UK, UAE, and beyond.</div>
+        </div>
+        <div class="about-main-card about-card-c">
+          <div class="about-meta-row">
+            <span class="about-meta-badge">Kolkata Based</span>
+            <span class="about-meta-badge">World Class</span>
+          </div>
+          <div class="about-card-icon">⚡</div>
+          <div class="about-card-title">MRL Developer</div>
+          <div class="about-card-meta">Founded with a mission to bring Silicon Valley-quality software to businesses that deserve better.</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="about-text fade-up delay-2">
+      <span class="section-label">// About Us</span>
+      <h2 class="section-title">We're Builders.<br>Not <em>Just</em> Coders.</h2>
+      <p class="about-lead">MRL Developer was built on a simple belief: every business, regardless of size, deserves software that actually works — and looks stunning doing it.</p>
+      <p class="about-lead">We combine deep technical expertise with genuine business understanding. We've worked with insurance advisors, club venues, retail brands, and SaaS founders. We speak your language.</p>
+      
+      <div class="about-values">
+        <div class="val-item">
+          <div class="val-icon">⚡</div>
+          <div class="val-title">Speed Without Shortcuts</div>
+          <div class="val-desc">Fast delivery, clean code. We never sacrifice quality for a deadline.</div>
+        </div>
+        <div class="val-item">
+          <div class="val-icon">🔒</div>
+          <div class="val-title">Transparency Always</div>
+          <div class="val-desc">Weekly updates, open comms. No black boxes, ever.</div>
+        </div>
+        <div class="val-item">
+          <div class="val-icon">🎯</div>
+          <div class="val-title">Results-Driven</div>
+          <div class="val-desc">We build for business outcomes, not just technical specs.</div>
+        </div>
+        <div class="val-item">
+          <div class="val-icon">🤝</div>
+          <div class="val-title">Long-Term Partners</div>
+          <div class="val-desc">We stay invested in your success long after launch day.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div style="padding:60px 0">
+  <div class="cta-strip fade-up">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Build<br>Something Remarkable?</h2>
+      <p class="cta-sub">Free consultation · No commitment required · Response within 24 hrs</p>
+    </div>
+    <div class="cta-actions">
+      <a href="#contact" class="btn-ink">Start a Project ↗</a>
+      <a href="https://wa.me/+919382181126?text=Hi%20MRL%20Developer%2C%20I%27d%20like%20to%20discuss%20a%20project" class="btn-ink-outline" target="_blank">WhatsApp Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--ink2);padding-top:80px">
+  <span class="section-label fade-up">// Contact</span>
+  <h2 class="section-title fade-up delay-1">Let's Build<br><em>Together</em></h2>
+  
+  <div class="contact-grid">
+    <div class="contact-form fade-up delay-2">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="Mike Ronald"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="mike@company.com"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Company / Business</label>
+        <input type="text" class="form-input" placeholder="Your Company Name"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Service Needed</label>
+        <select class="form-select">
+          <option value="">Select a service...</option>
+          <option>Web Development</option>
+          <option>Mobile App</option>
+          <option>UI/UX Design</option>
+          <option>E-Commerce</option>
+          <option>AI Integration</option>
+          <option>Cloud & DevOps</option>
+          <option>Full Project</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Budget Range</label>
+          <select class="form-select">
+            <option>₹25,000 – ₹50,000</option>
+            <option>₹50,000 – ₹1,00,000</option>
+            <option>₹1,00,000 – ₹3,00,000</option>
+            <option>₹3,00,000+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Timeline</label>
+          <select class="form-select">
+            <option>ASAP (1-2 weeks)</option>
+            <option>1 Month</option>
+            <option>2-3 Months</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tell Us About Your Project</label>
+        <textarea class="form-textarea" placeholder="Describe your idea, goals, and any specific requirements..."></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit(this)">
+        Send Message
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H6M13 3V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    
+    <div class="contact-info fade-up delay-3">
+      <div class="contact-info-item">
+        <div class="ci-icon">📍</div>
+        <div>
+          <div class="ci-label">Location</div>
+          <div class="ci-value">Kolkata, West Bengal</div>
+          <div class="ci-sub">Available for on-site meetings in Kolkata & remotely worldwide</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">📧</div>
+        <div>
+          <div class="ci-label">Email</div>
+          <div class="ci-value">hello@mrldeveloper.com</div>
+          <div class="ci-sub">We respond within 24 hours, always</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">💬</div>
+        <div>
+          <div class="ci-label">WhatsApp</div>
+          <div class="ci-value">+91 93821 81126</div>
+          <div class="ci-sub">Quick questions? Just message us directly</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">⏰</div>
+        <div>
+          <div class="ci-label">Working Hours</div>
+          <div class="ci-value">Mon – Sat, 9 AM – 8 PM IST</div>
+          <div class="ci-sub">Urgent projects? We're always reachable</div>
+        </div>
+      </div>
+      
+      <div style="background:rgba(200,247,42,0.06);border:1px solid rgba(200,247,42,0.15);border-radius:16px;padding:24px;margin-top:4px">
+        <div style="font-size:13px;color:var(--acid);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Free Discovery Call</div>
+        <div style="font-size:14px;color:rgba(245,242,236,0.7);line-height:1.6;margin-bottom:20px">Not sure where to start? Book a free 30-minute call. We'll map out exactly what you need and how we'd approach it.</div>
+        <a href="https://wa.me/+919382181126?text=Hi%20MRL%20Developer%2C%20I%27d%20like%20to%20book%20a%20free%20discovery%20call" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--acid);color:var(--ink);padding:12px 24px;border-radius:100px;font-size:13px;font-weight:700;text-decoration:none;transition:transform 0.2s">
+          Book Free Call →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="margin-bottom:16px">
+        <div class="logo-mark">M</div>
+        MRL Developer
+      </div>
+      <p class="footer-tagline">We build software that transforms businesses. Based in Kolkata, delivering world-class results worldwide.</p>
+      <div class="footer-social">
+        <a href="https://wa.me/+919382181126" target="_blank" class="social-btn" title="WhatsApp">💬</a>
+        <a href="#" class="social-btn" title="LinkedIn">in</a>
+        <a href="#" class="social-btn" title="GitHub">⌨</a>
+        <a href="#" class="social-btn" title="Instagram">📸</a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Web Development</a></li>
+        <li><a href="#services">Mobile Apps</a></li>
+        <li><a href="#services">UI/UX Design</a></li>
+        <li><a href="#services">E-Commerce</a></li>
+        <li><a href="#services">AI Integration</a></li>
+        <li><a href="#services">Cloud & DevOps</a></li>
+      </ul>
+    </div>
+    
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#work">Our Work</a></li>
+        <li><a href="#process">Our Process</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact">Careers</a></li>
+      </ul>
+    </div>
+    
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="mailto:hello@mrldeveloper.com">hello@mrldeveloper.com</a></li>
+        <li><a href="https://wa.me/+919382181126">+91 93821 81126</a></li>
+        <li><a href="#contact">Kolkata, West Bengal</a></li>
+        <li><a href="#contact">Book a Free Call</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span>MRL Developer</span>. All rights reserved. Built with ❤️ in Kolkata.</div>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* CURSOR */
+const cursor=document.getElementById('cursor');
+const trail=document.getElementById('cursor-trail');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+  setTimeout(()=>{trail.style.left=mx+'px';trail.style.top=my+'px'},80);
+});
+document.querySelectorAll('a,button,.service-card,.work-card,.testi-card,.price-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='24px';cursor.style.height='24px';trail.style.width='60px';trail.style.height='60px'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';trail.style.width='40px';trail.style.height='40px'});
+});
+
+/* COUNTER ANIMATION */
+function animateCount(el,target){
+  let start=0;const dur=1800;const step=timestamp=>{
+    if(!start)start=timestamp;
+    const prog=Math.min((timestamp-start)/dur,1);
+    const ease=1-Math.pow(1-prog,4);
+    el.textContent=Math.floor(ease*target)+(target>10?'+':'');
+    if(prog<1)requestAnimationFrame(step);
+    else el.textContent=target+'+';
+  };requestAnimationFrame(step);
+}
+const counters=document.querySelectorAll('[data-count]');
+let counted=false;
+function checkCounters(){
+  if(counted)return;
+  counters.forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight){counted=true;counters.forEach(c=>animateCount(c,parseInt(c.dataset.count)));}
+  });
+}
+
+/* SCROLL ANIMATIONS */
+const fadeEls=document.querySelectorAll('.fade-up');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:0.1,rootMargin:'0px 0px -60px 0px'});
+fadeEls.forEach(el=>obs.observe(el));
+window.addEventListener('scroll',checkCounters);
+
+/* MOBILE MENU */
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.body.style.overflow=document.getElementById('mobileMenu').classList.contains('open')?'hidden':'';
+}
+function closeMenu(){
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* FORM SUBMIT */
+function handleSubmit(btn){
+  btn.textContent='Sending...';btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML='✓ Message Sent! We\'ll be in touch shortly.';
+    btn.style.background='rgba(200,247,42,0.2)';btn.style.color='var(--acid)';
+    btn.style.border='1px solid rgba(200,247,42,0.3)';btn.style.borderRadius='12px';
+  },1500);
+}
+
+/* NAV SCROLL */
+const nav=document.querySelector('nav');
+window.addEventListener('scroll',()=>{
+  nav.style.borderBottomColor=window.scrollY>50?'rgba(245,242,236,0.1)':'rgba(245,242,236,0.06)';
+});
+</script>
+</body>
+</html>
