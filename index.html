@@ -732,64 +732,75 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
 </div>
 
 <!-- CONTACT -->
-<section id="contact">
-  <span class="section-label fade-up">Let's Build</span>
-  <h2 class="section-title fade-up delay-1">Partner With MRL Innovations.<br><em>Schedule a Scoping Session.</em></h2>
-  <div class="contact-grid">
-    <div class="contact-form fade-up delay-2">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">First Name</label>
-          <input type="text" class="form-input" placeholder="">
+  <div class="contact-form fade-up delay-2">
+      <!-- THIS IS THE FORM TAG THAT CONNECTS TO YOUR GMAIL -->
+      <form action="https://formsubmit.co/mikeronald338@gmail.com" method="POST">
+        
+        <!-- Hidden settings for FormSubmit -->
+        <input type="hidden" name="_subject" value="New Enterprise Lead from MRL Innovations!">
+        <input type="hidden" name="_captcha" value="false">
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <!-- Notice the name="First Name" added here -->
+            <input type="text" name="First Name" class="form-input" placeholder="Mike" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" name="Last Name" class="form-input" placeholder="Lakra" required>
+          </div>
         </div>
+        
         <div class="form-group">
-          <label class="form-label">Last Name</label>
-          <input type="text" class="form-input" placeholder="">
+          <label class="form-label">Email Address</label>
+          <input type="email" name="Email Address" class="form-input" placeholder="mike@company.com" required>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email Address</label>
-        <input type="email" class="form-input" placeholder="">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Core Challenge</label>
-        <select class="form-select">
-          <option value="">Select an area of focus...</option>
-          <option>Legacy System Modernization</option>
-          <option>New Product Engineering (MVP)</option>
-          <option>Cloud Infrastructure & Scaling</option>
-          <option>Enterprise AI Integration</option>
-          <option>Dedicated Team Augmentation</option>
-        </select>
-      </div>
-      <div class="form-row">
+        
         <div class="form-group">
-          <label class="form-label">Company Stage / Size</label>
-          <select class="form-select">
-            <option>Seed / Early Startup</option>
-            <option>Growth Stage</option>
-            <option>Established Enterprise</option>
-            <option>Government / Public Sector</option>
+          <label class="form-label">Core Challenge</label>
+          <select name="Core Challenge" class="form-select" required>
+            <option value="">Select an area of focus...</option>
+            <option>Legacy System Modernization</option>
+            <option>New Product Engineering (MVP)</option>
+            <option>Cloud Infrastructure & Scaling</option>
+            <option>Enterprise AI Integration</option>
+            <option>Dedicated Team Augmentation</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Target Timeline</label>
-          <select class="form-select">
-            <option>Immediate / Q1 Kickoff</option>
-            <option>Next 3 Months</option>
-            <option>Next 6 Months</option>
-            <option>Just Exploring Options</option>
-          </select>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Company Stage / Size</label>
+            <select name="Company Stage" class="form-select" required>
+              <option>Seed / Early Startup</option>
+              <option>Growth Stage</option>
+              <option>Established Enterprise</option>
+              <option>Government / Public Sector</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Target Timeline</label>
+            <select name="Target Timeline" class="form-select" required>
+              <option>Immediate / Q1 Kickoff</option>
+              <option>Next 3 Months</option>
+              <option>Next 6 Months</option>
+              <option>Just Exploring Options</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Project Details</label>
-        <textarea class="form-textarea" placeholder="Tell us about your roadmap..."></textarea>
-      </div>
-      <button type="button" class="form-submit" onclick="handleSubmit(this)">
-        Request Engagement Proposal
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+        
+        <div class="form-group">
+          <label class="form-label">Project Details</label>
+          <textarea name="Project Details" class="form-textarea" placeholder="Tell us about your roadmap..." required></textarea>
+        </div>
+        
+        <!-- Changed to type="submit" so it actually sends the email -->
+        <button type="submit" class="form-submit">
+          Request Engagement Proposal
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
     </div>
     <div class="contact-info fade-up delay-3">
       <div class="contact-info-item">
