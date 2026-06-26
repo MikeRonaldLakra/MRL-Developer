@@ -23,11 +23,7 @@
   --r:4px;--r2:12px;--r3:24px;
 }
 html{scroll-behavior:smooth}
-body{background:var(--ink);color:var(--off);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none}
-
-/* CURSOR */
-.cursor{position:fixed;width:12px;height:12px;background:var(--acid);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,background 0.3s;mix-blend-mode:difference}
-.cursor-trail{position:fixed;width:40px;height:40px;border:1px solid rgba(200,247,42,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0.12s ease,top 0.12s ease,width 0.3s,height 0.3s}
+body{background:var(--ink);color:var(--off);font-family:'Syne',sans-serif;overflow-x:hidden;}
 
 /* NOISE */
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.6}
@@ -327,8 +323,6 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-trail" id="cursor-trail"></div>
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#capabilities" onclick="closeMenu()">Capabilities</a>
@@ -897,19 +891,6 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
 </footer>
 
 <script>
-/* CURSOR */
-const cursor=document.getElementById('cursor');
-const trail=document.getElementById('cursor-trail');
-let mx=0,my=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cursor.style.left=mx+'px';cursor.style.top=my+'px';
-  setTimeout(()=>{trail.style.left=mx+'px';trail.style.top=my+'px'},80);
-});
-document.querySelectorAll('a,button,.service-card,.work-card,.testi-card,.price-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cursor.style.width='24px';cursor.style.height='24px';trail.style.width='60px';trail.style.height='60px'});
-  el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';trail.style.width='40px';trail.style.height='40px'});
-});
 
 /* COUNTER */
 function animateCount(el,target){
