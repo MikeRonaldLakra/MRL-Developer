@@ -254,6 +254,95 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
 .fade-up.delay-2{transition-delay:0.2s}
 .fade-up.delay-3{transition-delay:0.3s}
 .fade-up.delay-4{transition-delay:0.4s}
+/* ===== CURSOR ===== */
+.cursor-dot,.cursor-glow{position:fixed;top:0;left:0;pointer-events:none;z-index:2000;border-radius:50%;will-change:transform;opacity:0;transition:opacity 0.3s}
+.cursor-dot{width:8px;height:8px;background:var(--acid);transform:translate(-50%,-50%)}
+.cursor-glow{width:36px;height:36px;border:1px solid rgba(200,247,42,0.5);transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,border-color 0.25s,background 0.25s,opacity 0.3s}
+body.cursor-ready .cursor-dot,body.cursor-ready .cursor-glow{opacity:1}
+body.cursor-hover .cursor-glow{width:64px;height:64px;background:rgba(200,247,42,0.08);border-color:var(--acid)}
+body.cursor-hover .cursor-dot{opacity:0}
+@media(hover:none){.cursor-dot,.cursor-glow{display:none}}
+
+/* ===== HERO NETWORK CANVAS ===== */
+.hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.85}
+
+/* ===== SERVICE CARD MICRO-VISUALS ===== */
+.svc-visual{width:100%;max-width:220px;height:auto;margin:-6px 0 22px;overflow:visible}
+.svc-visual .svc-node{fill:none;stroke:rgba(245,242,236,0.35);stroke-width:1.6;transition:stroke 0.3s}
+.svc-visual .svc-node-main{fill:rgba(200,247,42,0.15);stroke:var(--acid)}
+.svc-visual .svc-rack{fill:rgba(245,242,236,0.06);stroke:rgba(245,242,236,0.3);stroke-width:1.2}
+.svc-visual .svc-cloud-core{fill:rgba(200,247,42,0.08);stroke:var(--acid);stroke-dasharray:4 3;animation:svcSpin 6s linear infinite}
+.svc-visual .svc-line{fill:none;stroke:rgba(245,242,236,0.15);stroke-width:1.2;transition:stroke 0.3s}
+.svc-visual .svc-line-delay{stroke-dasharray:3 3}
+.svc-visual .svc-packet{fill:var(--acid);opacity:0.9}
+.svc-visual .svc-frame{fill:none;stroke:rgba(245,242,236,0.25);stroke-width:1.2}
+.svc-visual .svc-morph{fill:rgba(245,242,236,0.1);transition:all 0.6s cubic-bezier(0.16,1,0.3,1)}
+.service-card:hover .svc-visual .svc-node{stroke:rgba(10,10,10,0.5)}
+.service-card:hover .svc-visual .svc-node-main{stroke:var(--ink);fill:rgba(10,10,10,0.15)}
+.service-card:hover .svc-visual .svc-rack{stroke:rgba(10,10,10,0.5);fill:rgba(10,10,10,0.08)}
+.service-card:hover .svc-visual .svc-cloud-core{stroke:var(--ink)}
+.service-card:hover .svc-visual .svc-line{stroke:rgba(10,10,10,0.3)}
+.service-card:hover .svc-visual .svc-frame{stroke:rgba(10,10,10,0.4)}
+.service-card:hover .svc-visual .svc-packet{fill:var(--ink)}
+.service-card:hover .svc-visual .svc-morph{fill:rgba(10,10,10,0.15)}
+.service-card[data-service="ui"]:hover .svc-morph-a{width:90px}
+.service-card[data-service="ui"]:hover .svc-morph-b{width:50px}
+.service-card[data-service="ui"]:hover .svc-morph-c{x:150;width:42px}
+.svc-visual .svc-packet,.svc-visual .svc-line,.svc-visual .svc-cloud-core{animation-play-state:paused}
+.service-card:hover .svc-visual .svc-packet,.service-card:hover .svc-visual .svc-cloud-core{animation-play-state:running}
+.service-card:hover .svc-visual animateMotion{animation-play-state:running}
+
+/* ===== TECH CONSTELLATION ===== */
+.tech-constellation{position:relative;margin-top:60px}
+.tech-constellation-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.6;display:none}
+.tech-scroll{display:flex;gap:16px;flex-wrap:wrap;position:relative;z-index:1;transition:transform 0.1s linear}
+.tech-orbit-active .tech-scroll{min-height:340px}
+.tech-orbit-active .tech-pill{position:absolute;top:0;left:0;transition:box-shadow 0.3s,border-color 0.3s,opacity 0.3s}
+.tech-pill.tech-dim{opacity:0.25}
+.tech-pill.tech-lit{border-color:var(--acid);box-shadow:0 0 24px rgba(200,247,42,0.25);background:rgba(200,247,42,0.06)}
+
+/* ===== PROCESS PACKETS ===== */
+.process-packet{position:absolute;top:38px;left:10%;width:6px;height:6px;border-radius:50%;background:var(--acid);box-shadow:0 0 10px 2px rgba(200,247,42,0.6);animation:packetTravel 3.6s ease-in-out infinite;z-index:1}
+.process-packet-b{animation-delay:1.2s;opacity:0.7}
+.process-packet-c{animation-delay:2.4s;opacity:0.45}
+@keyframes packetTravel{0%{transform:translateX(0);opacity:0}8%{opacity:1}92%{opacity:1}100%{transform:translateX(calc(80vw - 80vw*0.2));opacity:0}}
+
+/* ===== CONTACT TERMINAL ===== */
+.contact-terminal{background:#050505;border:1px solid rgba(245,242,236,0.1);border-radius:14px;overflow:hidden;margin-bottom:8px}
+.terminal-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:rgba(245,242,236,0.03);border-bottom:1px solid rgba(245,242,236,0.08)}
+.terminal-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.t-red{background:#ff5f56}.t-yellow{background:#ffbd2e}.t-green{background:#27c93f}
+.terminal-bar-title{margin-left:8px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.5px}
+.terminal-body{padding:20px;font-family:'DM Mono',monospace;font-size:13px;line-height:1.9;min-height:170px;color:rgba(245,242,236,0.75)}
+.terminal-line{white-space:pre-wrap}
+.terminal-line .tl-ok{color:var(--acid)}
+.terminal-line .tl-mut{color:var(--muted)}
+.terminal-cursor{display:inline-block;width:7px;height:14px;background:var(--acid);vertical-align:-2px;animation:pulse 1s step-end infinite}
+
+/* ===== MAGNETIC / RIPPLE BUTTONS ===== */
+.btn-primary,.btn-ghost,.nav-cta,.btn-ink,.btn-ink-outline,.form-submit,.price-btn{position:relative;overflow:hidden;will-change:transform}
+.btn-ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.35);transform:scale(0);animation:rippleAnim 0.6s ease-out forwards;pointer-events:none}
+.price-btn-dark .btn-ripple,.btn-ink .btn-ripple{background:rgba(200,247,42,0.35)}
+@keyframes rippleAnim{to{transform:scale(3);opacity:0}}
+
+/* ===== SCROLL STORYTELLING VARIANTS ===== */
+.reveal-scale{opacity:0;transform:scale(0.92);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1)}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+.reveal-mask{opacity:0;clip-path:inset(0 0 100% 0);transition:opacity 0.6s ease,clip-path 0.8s cubic-bezier(0.16,1,0.3,1)}
+.reveal-mask.visible{opacity:1;clip-path:inset(0 0 0% 0)}
+.reveal-blur{opacity:0;filter:blur(14px);transform:translateY(20px);transition:opacity 0.8s ease,filter 0.8s ease,transform 0.8s ease}
+.reveal-blur.visible{opacity:1;filter:blur(0);transform:translateY(0)}
+.reveal-perspective{opacity:0;transform:perspective(800px) rotateX(18deg) translateY(30px);transition:opacity 0.8s ease,transform 0.8s cubic-bezier(0.16,1,0.3,1)}
+.reveal-perspective.visible{opacity:1;transform:perspective(800px) rotateX(0) translateY(0)}
+
+/* Respect reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .hero-canvas,.tech-constellation-canvas{display:none!important}
+  .process-packet{display:none}
+  .cursor-dot,.cursor-glow{display:none}
+  *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
+}
+
 @media(max-width:1024px){
   nav{padding:16px 30px}
   .nav-links{display:none}
@@ -278,6 +367,10 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
   .hero-stats{position:static;flex-direction:row;flex-wrap:wrap;margin-top:60px}
   .scroll-indicator{display:none}
   .form-row{grid-template-columns:1fr}
+  .tech-orbit-active .tech-pill{position:static!important;transform:none!important;box-shadow:none!important}
+  .tech-orbit-active .tech-scroll{min-height:0}
+  .tech-constellation-canvas{display:none!important}
+  .process-packet{display:none}
 }
 @media(max-width:640px){
   .services-grid{grid-template-columns:1fr}
@@ -290,6 +383,8 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
 </head>
 <body>
 
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="cursor-dot" id="cursorDot"></div>
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#capabilities" onclick="closeMenu()">Capabilities</a>
@@ -321,6 +416,7 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
   <div class="hero-grid-bg"></div>
   <div class="hero-orb orb1"></div>
   <div class="hero-orb orb2"></div>
+  <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-eyebrow">
     <span class="eyebrow-dot"></span> Available for Enterprise Partnerships · 2026
   </div>
@@ -368,40 +464,82 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
   <span class="section-label fade-up">Core Expertise</span>
   <h2 class="section-title fade-up delay-1">Enterprise Capabilities.<br>Built for <em>Global</em> Scale.</h2>
   <div class="services-grid">
-    <div class="service-card fade-up delay-1">
+    <div class="service-card fade-up delay-1" data-service="api">
       <div class="service-inner">
         <span class="svc-num"></span>
         <div class="svc-icon">🌐</div>
+        <svg class="svc-visual" viewBox="0 0 220 70" aria-hidden="true">
+          <circle class="svc-node" cx="14" cy="35" r="5"></circle>
+          <circle class="svc-node" cx="110" cy="14" r="4"></circle>
+          <circle class="svc-node" cx="110" cy="56" r="4"></circle>
+          <circle class="svc-node svc-node-main" cx="206" cy="35" r="6"></circle>
+          <path class="svc-line" d="M14 35 L110 14 L206 35"></path>
+          <path class="svc-line svc-line-delay" d="M14 35 L110 56 L206 35"></path>
+          <circle class="svc-packet" r="3" cx="14" cy="35"><animateMotion dur="2.2s" repeatCount="indefinite" path="M0 0 L96 -21 L192 0"></animateMotion></circle>
+          <circle class="svc-packet svc-packet-b" r="3" cx="14" cy="35"><animateMotion dur="2.6s" begin="0.6s" repeatCount="indefinite" path="M0 0 L96 21 L192 0"></animateMotion></circle>
+        </svg>
         <h3 class="svc-title">Digital Engineering</h3>
         <p class="svc-desc">End-to-end product engineering. We build resilient, high-performance web and mobile applications that scale securely from hundreds to millions of users.</p>
         <div class="svc-tags"><span>React</span><span>Next.js</span><span>Flutter</span><span>Node.js</span></div>
       </div>
       <span class="svc-arrow"></span>
     </div>
-    <div class="service-card fade-up delay-2">
+    <div class="service-card fade-up delay-2" data-service="cloud">
       <div class="service-inner">
         <span class="svc-num"></span>
         <div class="svc-icon">☁️</div>
+        <svg class="svc-visual" viewBox="0 0 220 70" aria-hidden="true">
+          <rect class="svc-node svc-rack" x="10" y="16" width="26" height="10" rx="2"></rect>
+          <rect class="svc-node svc-rack" x="10" y="30" width="26" height="10" rx="2"></rect>
+          <rect class="svc-node svc-rack" x="10" y="44" width="26" height="10" rx="2"></rect>
+          <path class="svc-line" d="M40 21 H100"></path>
+          <path class="svc-line" d="M40 35 H100"></path>
+          <path class="svc-line" d="M40 49 H100"></path>
+          <circle class="svc-node svc-node-main svc-cloud-core" cx="150" cy="35" r="18"></circle>
+          <circle class="svc-packet" r="3" cx="40" cy="21"><animateMotion dur="1.8s" repeatCount="indefinite" path="M0 0 L110 14"></animateMotion></circle>
+          <circle class="svc-packet svc-packet-b" r="3" cx="40" cy="49"><animateMotion dur="2.1s" begin="0.4s" repeatCount="indefinite" path="M0 0 L110 -14"></animateMotion></circle>
+        </svg>
         <h3 class="svc-title">Cloud & Infrastructure</h3>
         <p class="svc-desc">Future-proof your infrastructure. We architect robust, auto-scaling cloud environments that guarantee 99.9% uptime and enterprise-grade security.</p>
         <div class="svc-tags"><span>AWS</span><span>Docker</span><span>CI/CD</span><span>Microservices</span></div>
       </div>
       <span class="svc-arrow"></span>
     </div>
-    <div class="service-card fade-up delay-3">
+    <div class="service-card fade-up delay-3" data-service="ai">
       <div class="service-inner">
         <span class="svc-num"></span>
         <div class="svc-icon">🤖</div>
+        <svg class="svc-visual" viewBox="0 0 220 70" aria-hidden="true">
+          <circle class="svc-node" cx="20" cy="16" r="4"></circle>
+          <circle class="svc-node" cx="20" cy="35" r="4"></circle>
+          <circle class="svc-node" cx="20" cy="54" r="4"></circle>
+          <circle class="svc-node" cx="80" cy="10" r="4"></circle>
+          <circle class="svc-node" cx="80" cy="28" r="4"></circle>
+          <circle class="svc-node" cx="80" cy="46" r="4"></circle>
+          <circle class="svc-node" cx="80" cy="60" r="4"></circle>
+          <circle class="svc-node svc-node-main" cx="150" cy="35" r="6"></circle>
+          <g class="svc-mesh">
+            <path class="svc-line" d="M20 16 L80 10 M20 16 L80 28 M20 35 L80 10 M20 35 L80 46 M20 54 L80 46 M20 54 L80 60"></path>
+            <path class="svc-line" d="M80 10 L150 35 M80 28 L150 35 M80 46 L150 35 M80 60 L150 35"></path>
+          </g>
+          <circle class="svc-packet" r="3" cx="20" cy="35"><animateMotion dur="2s" repeatCount="indefinite" path="M0 0 L60 -7 L130 0"></animateMotion></circle>
+        </svg>
         <h3 class="svc-title">Data & Applied AI</h3>
         <p class="svc-desc">Turn data into an unfair advantage. We integrate bespoke AI solutions and advanced analytics into your workflows to automate processes and drive intelligent decision-making.</p>
         <div class="svc-tags"><span>OpenAI</span><span>LangChain</span><span>Vector DBs</span><span>Python</span></div>
       </div>
       <span class="svc-arrow"></span>
     </div>
-    <div class="service-card fade-up delay-4">
+    <div class="service-card fade-up delay-4" data-service="ui">
       <div class="service-inner">
         <span class="svc-num"></span>
         <div class="svc-icon">🎨</div>
+        <svg class="svc-visual" viewBox="0 0 220 70" aria-hidden="true">
+          <rect class="svc-frame" x="8" y="8" width="204" height="54" rx="8"></rect>
+          <rect class="svc-morph svc-morph-a" x="18" y="18" width="60" height="12" rx="3"></rect>
+          <rect class="svc-morph svc-morph-b" x="18" y="36" width="90" height="10" rx="3"></rect>
+          <rect class="svc-morph svc-morph-c" x="140" y="18" width="52" height="28" rx="6"></rect>
+        </svg>
         <h3 class="svc-title">Digital Experience (DX)</h3>
         <p class="svc-desc">Design that drives revenue. We craft frictionless, pixel-perfect digital experiences and conversion-optimized interfaces that captivate users and accelerate growth.</p>
         <div class="svc-tags"><span>UI/UX</span><span>Figma</span><span>Design Systems</span><span>Prototyping</span></div>
@@ -413,21 +551,24 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
 <section class="tech-section">
   <span class="section-label fade-up">Tech Arsenal</span>
   <h2 class="section-title fade-up delay-1">The Stack We<br><em>Master</em></h2>
-  <div class="tech-scroll">
-    <div class="tech-pill t-react fade-up delay-1"><span class="tech-dot"></span>React</div>
-    <div class="tech-pill t-next fade-up delay-1"><span class="tech-dot"></span>Next.js</div>
-    <div class="tech-pill t-ts fade-up delay-2"><span class="tech-dot"></span>TypeScript</div>
-    <div class="tech-pill t-node fade-up delay-2"><span class="tech-dot"></span>Node.js</div>
-    <div class="tech-pill t-python fade-up delay-2"><span class="tech-dot"></span>Python</div>
-    <div class="tech-pill t-flutter fade-up delay-3"><span class="tech-dot"></span>Flutter</div>
-    <div class="tech-pill t-aws fade-up delay-3"><span class="tech-dot"></span>AWS</div>
-    <div class="tech-pill t-docker fade-up delay-3"><span class="tech-dot"></span>Docker</div>
-    <div class="tech-pill t-psql fade-up delay-4"><span class="tech-dot"></span>PostgreSQL</div>
-    <div class="tech-pill t-mongo fade-up delay-4"><span class="tech-dot"></span>MongoDB</div>
-    <div class="tech-pill t-openai fade-up delay-4"><span class="tech-dot"></span>OpenAI</div>
-    <div class="tech-pill t-langchain fade-up delay-4"><span class="tech-dot"></span>LangChain</div>
-    <div class="tech-pill t-figma fade-up delay-4"><span class="tech-dot"></span>Figma</div>
-    <div class="tech-pill t-gql fade-up delay-4"><span class="tech-dot"></span>GraphQL</div>
+  <div class="tech-constellation" id="techConstellation">
+    <canvas class="tech-constellation-canvas" id="techCanvas" aria-hidden="true"></canvas>
+    <div class="tech-scroll" id="techScroll">
+      <div class="tech-pill t-react fade-up delay-1" data-cat="frontend"><span class="tech-dot"></span>React</div>
+      <div class="tech-pill t-next fade-up delay-1" data-cat="frontend"><span class="tech-dot"></span>Next.js</div>
+      <div class="tech-pill t-ts fade-up delay-2" data-cat="frontend"><span class="tech-dot"></span>TypeScript</div>
+      <div class="tech-pill t-node fade-up delay-2" data-cat="backend"><span class="tech-dot"></span>Node.js</div>
+      <div class="tech-pill t-python fade-up delay-2" data-cat="backend"><span class="tech-dot"></span>Python</div>
+      <div class="tech-pill t-flutter fade-up delay-3" data-cat="frontend"><span class="tech-dot"></span>Flutter</div>
+      <div class="tech-pill t-aws fade-up delay-3" data-cat="cloud"><span class="tech-dot"></span>AWS</div>
+      <div class="tech-pill t-docker fade-up delay-3" data-cat="cloud"><span class="tech-dot"></span>Docker</div>
+      <div class="tech-pill t-psql fade-up delay-4" data-cat="data"><span class="tech-dot"></span>PostgreSQL</div>
+      <div class="tech-pill t-mongo fade-up delay-4" data-cat="data"><span class="tech-dot"></span>MongoDB</div>
+      <div class="tech-pill t-openai fade-up delay-4" data-cat="ai"><span class="tech-dot"></span>OpenAI</div>
+      <div class="tech-pill t-langchain fade-up delay-4" data-cat="ai"><span class="tech-dot"></span>LangChain</div>
+      <div class="tech-pill t-figma fade-up delay-4" data-cat="design"><span class="tech-dot"></span>Figma</div>
+      <div class="tech-pill t-gql fade-up delay-4" data-cat="backend"><span class="tech-dot"></span>GraphQL</div>
+    </div>
   </div>
 </section>
 
@@ -486,6 +627,9 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
   <span class="section-label fade-up">How We Work</span>
   <h2 class="section-title fade-up delay-1">Our Battle-Tested<br><em>Process</em></h2>
   <div class="process-steps">
+    <span class="process-packet"></span>
+    <span class="process-packet process-packet-b"></span>
+    <span class="process-packet process-packet-c"></span>
     <div class="step-card fade-up delay-1">
       <div class="step-dot acid">1</div>
       <span class="step-num">01</span>
@@ -750,6 +894,15 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
       </form>
     </div>
     <div class="contact-info fade-up delay-3">
+      <div class="contact-terminal" id="contactTerminal">
+        <div class="terminal-bar">
+          <span class="terminal-dot t-red"></span>
+          <span class="terminal-dot t-yellow"></span>
+          <span class="terminal-dot t-green"></span>
+          <span class="terminal-bar-title">mrl-engineering — project init</span>
+        </div>
+        <div class="terminal-body" id="terminalBody"></div>
+      </div>
       <div class="contact-info-item">
         <div class="ci-icon">✉️</div>
         <div>
@@ -867,6 +1020,9 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 function animateCount(el,target){
   let start=0;const dur=1800;
@@ -918,6 +1074,329 @@ const nav=document.querySelector('nav');
 window.addEventListener('scroll',()=>{
   nav.style.borderBottomColor=window.scrollY>50?'rgba(245,242,236,0.1)':'rgba(245,242,236,0.06)';
 });
+
+/* =========================================================
+   ENTERPRISE INTERACTION LAYER
+   Cursor · Magnetic buttons · Hero network · Tech constellation
+   Process packets · Terminal · Scroll storytelling
+   ========================================================= */
+(function(){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(hover: none)').matches;
+
+  /* ---------- Custom cursor ---------- */
+  if(!isTouch && !reduceMotion){
+    const dot=document.getElementById('cursorDot');
+    const glow=document.getElementById('cursorGlow');
+    let mx=0,my=0,gx=0,gy=0;
+    window.addEventListener('mousemove',e=>{
+      mx=e.clientX;my=e.clientY;
+      document.body.classList.add('cursor-ready');
+      dot.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;
+    });
+    function glowLoop(){
+      gx+=(mx-gx)*0.16;gy+=(my-gy)*0.16;
+      glow.style.transform=`translate(${gx}px,${gy}px) translate(-50%,-50%)`;
+      requestAnimationFrame(glowLoop);
+    }
+    glowLoop();
+    const hoverTargets='a, button, .service-card, .tech-pill, .price-card, .work-card, input, select, textarea';
+    document.addEventListener('mouseover',e=>{
+      if(e.target.closest(hoverTargets))document.body.classList.add('cursor-hover');
+    });
+    document.addEventListener('mouseout',e=>{
+      if(e.target.closest(hoverTargets))document.body.classList.remove('cursor-hover');
+    });
+  }
+
+  /* ---------- Magnetic buttons + ripple ---------- */
+  const magneticSelector='.btn-primary,.btn-ghost,.nav-cta,.btn-ink,.btn-ink-outline,.form-submit,.price-btn';
+  document.querySelectorAll(magneticSelector).forEach(btn=>{
+    if(!isTouch && !reduceMotion){
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        const relX=e.clientX-r.left-r.width/2;
+        const relY=e.clientY-r.top-r.height/2;
+        btn.style.transform=`translate(${relX*0.25}px,${relY*0.35}px)`;
+      });
+      btn.addEventListener('mouseleave',()=>{
+        btn.style.transform='translate(0,0)';
+        btn.style.transition='transform 0.4s cubic-bezier(0.16,1,0.3,1)';
+        setTimeout(()=>{btn.style.transition='';},400);
+      });
+    }
+    btn.addEventListener('click',function(e){
+      const r=btn.getBoundingClientRect();
+      const ripple=document.createElement('span');
+      const size=Math.max(r.width,r.height)*1.4;
+      ripple.className='btn-ripple';
+      ripple.style.width=ripple.style.height=size+'px';
+      ripple.style.left=(e.clientX-r.left-size/2)+'px';
+      ripple.style.top=(e.clientY-r.top-size/2)+'px';
+      btn.appendChild(ripple);
+      setTimeout(()=>ripple.remove(),650);
+    });
+  });
+
+  /* ---------- Hero infrastructure network (Three.js) ---------- */
+  (function heroNetwork(){
+    const canvas=document.getElementById('heroCanvas');
+    const heroSection=document.getElementById('home');
+    if(!canvas || !heroSection || reduceMotion || typeof THREE==='undefined')return;
+
+    const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
+    const scene=new THREE.Scene();
+    const camera=new THREE.PerspectiveCamera(55,1,0.1,1000);
+    camera.position.z=60;
+
+    const NODE_COUNT=isTouch?36:64;
+    const nodes=[];
+    const spread=70;
+    for(let i=0;i<NODE_COUNT;i++){
+      nodes.push({
+        pos:new THREE.Vector3((Math.random()-0.5)*spread*1.6,(Math.random()-0.5)*spread,(Math.random()-0.5)*40-10),
+        vel:new THREE.Vector3((Math.random()-0.5)*0.03,(Math.random()-0.5)*0.03,(Math.random()-0.5)*0.02)
+      });
+    }
+
+    const pointGeo=new THREE.BufferGeometry();
+    const pointPositions=new Float32Array(NODE_COUNT*3);
+    pointGeo.setAttribute('position',new THREE.BufferAttribute(pointPositions,3));
+    const pointMat=new THREE.PointsMaterial({color:0xc8f72a,size:1.6,transparent:true,opacity:0.85,sizeAttenuation:true});
+    const points=new THREE.Points(pointGeo,pointMat);
+    scene.add(points);
+
+    const MAX_LINES=NODE_COUNT*6;
+    const lineGeo=new THREE.BufferGeometry();
+    const linePositions=new Float32Array(MAX_LINES*2*3);
+    lineGeo.setAttribute('position',new THREE.BufferAttribute(linePositions,3));
+    const lineMat=new THREE.LineBasicMaterial({color:0x9fe61a,transparent:true,opacity:0.12});
+    const lines=new THREE.LineSegments(lineGeo,lineMat);
+    scene.add(lines);
+
+    let mouseX=0,mouseY=0,targetRotX=0,targetRotY=0;
+    let visible=true;
+
+    function resize(){
+      const w=heroSection.clientWidth,h=heroSection.clientHeight;
+      renderer.setSize(w,h,false);
+      camera.aspect=w/h;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    window.addEventListener('resize',resize);
+
+    heroSection.addEventListener('mousemove',e=>{
+      const r=heroSection.getBoundingClientRect();
+      mouseX=((e.clientX-r.left)/r.width-0.5)*2;
+      mouseY=((e.clientY-r.top)/r.height-0.5)*2;
+    });
+
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(en=>{visible=en.isIntersecting;});
+    },{threshold:0});
+    io.observe(heroSection);
+
+    function tick(){
+      requestAnimationFrame(tick);
+      if(!visible)return;
+      const linkDist=18;
+      let lineIdx=0;
+      for(let i=0;i<NODE_COUNT;i++){
+        const n=nodes[i];
+        n.pos.add(n.vel);
+        if(n.pos.x> spread*0.8||n.pos.x<-spread*0.8)n.vel.x*=-1;
+        if(n.pos.y> spread*0.5||n.pos.y<-spread*0.5)n.vel.y*=-1;
+        if(n.pos.z> 20||n.pos.z<-40)n.vel.z*=-1;
+        pointPositions[i*3]=n.pos.x;
+        pointPositions[i*3+1]=n.pos.y;
+        pointPositions[i*3+2]=n.pos.z;
+      }
+      for(let i=0;i<NODE_COUNT && lineIdx<MAX_LINES;i++){
+        for(let j=i+1;j<NODE_COUNT && lineIdx<MAX_LINES;j++){
+          const d=nodes[i].pos.distanceTo(nodes[j].pos);
+          if(d<linkDist){
+            linePositions[lineIdx*6]=nodes[i].pos.x;
+            linePositions[lineIdx*6+1]=nodes[i].pos.y;
+            linePositions[lineIdx*6+2]=nodes[i].pos.z;
+            linePositions[lineIdx*6+3]=nodes[j].pos.x;
+            linePositions[lineIdx*6+4]=nodes[j].pos.y;
+            linePositions[lineIdx*6+5]=nodes[j].pos.z;
+            lineIdx++;
+          }
+        }
+      }
+      lineGeo.setDrawRange(0,lineIdx*2);
+      pointGeo.attributes.position.needsUpdate=true;
+      lineGeo.attributes.position.needsUpdate=true;
+
+      targetRotX+=(mouseY*0.15-targetRotX)*0.04;
+      targetRotY+=(mouseX*0.2-targetRotY)*0.04;
+      scene.rotation.x=targetRotX;
+      scene.rotation.y=targetRotY;
+
+      renderer.render(scene,camera);
+    }
+    tick();
+  })();
+
+  /* ---------- Tech constellation orbit ---------- */
+  (function techConstellation(){
+    const wrap=document.getElementById('techConstellation');
+    const scroll=document.getElementById('techScroll');
+    const canvas=document.getElementById('techCanvas');
+    if(!wrap||!scroll||reduceMotion)return;
+    if(window.innerWidth<1024)return; // keep natural flex layout on smaller screens
+
+    wrap.classList.add('tech-orbit-active');
+    canvas.style.display='block';
+    const ctx=canvas.getContext('2d');
+    const pills=Array.from(scroll.children);
+    let angle=0;
+    let hoveredCat=null;
+
+    function layout(){
+      const w=wrap.clientWidth,h=Math.max(340,wrap.clientHeight);
+      canvas.width=w*devicePixelRatio;canvas.height=h*devicePixelRatio;
+      canvas.style.width=w+'px';canvas.style.height=h+'px';
+      ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+      return {w,h};
+    }
+    let dims=layout();
+    window.addEventListener('resize',()=>{dims=layout();});
+
+    pills.forEach(p=>{
+      p.addEventListener('mouseenter',()=>{hoveredCat=p.dataset.cat;});
+      p.addEventListener('mouseleave',()=>{hoveredCat=null;});
+    });
+
+    function frame(){
+      requestAnimationFrame(frame);
+      const {w,h}=dims;
+      const cx=w/2,cy=h/2;
+      const rx=w*0.42,ry=h*0.38;
+      angle+=0.0022;
+      ctx.clearRect(0,0,w,h);
+      ctx.strokeStyle='rgba(200,247,42,0.15)';
+      ctx.lineWidth=1;
+
+      const posList=[];
+      pills.forEach((p,i)=>{
+        const a=angle+(i/pills.length)*Math.PI*2;
+        const x=cx+Math.cos(a)*rx-p.offsetWidth/2;
+        const y=cy+Math.sin(a)*ry-p.offsetHeight/2;
+        p.style.transform=`translate(${x}px,${y}px)`;
+        posList.push({x:x+p.offsetWidth/2,y:y+p.offsetHeight/2,cat:p.dataset.cat,el:p});
+        if(hoveredCat){
+          if(p.dataset.cat===hoveredCat){p.classList.add('tech-lit');p.classList.remove('tech-dim');}
+          else{p.classList.add('tech-dim');p.classList.remove('tech-lit');}
+        } else {
+          p.classList.remove('tech-lit');p.classList.remove('tech-dim');
+        }
+      });
+
+      ctx.beginPath();
+      for(let i=0;i<posList.length;i++){
+        for(let j=i+1;j<posList.length;j++){
+          const a=posList[i],b=posList[j];
+          const sameCat=a.cat===b.cat;
+          if(!sameCat && !hoveredCat)continue;
+          if(hoveredCat && a.cat!==hoveredCat && b.cat!==hoveredCat)continue;
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+        }
+      }
+      ctx.stroke();
+    }
+    frame();
+  })();
+
+  /* ---------- Contact terminal typewriter ---------- */
+  (function terminalTypewriter(){
+    const body=document.getElementById('terminalBody');
+    const wrap=document.getElementById('contactTerminal');
+    if(!body||!wrap)return;
+    const lines=[
+      {text:'> initializing_project.sh --client=new',cls:''},
+      {text:'✓ requirements received',cls:'tl-ok'},
+      {text:'✓ engineering team assigned',cls:'tl-ok'},
+      {text:'✓ discovery call scheduled',cls:'tl-ok'},
+      {text:'… architecture review queued',cls:'tl-mut'},
+      {text:'> awaiting your roadmap ↴',cls:''}
+    ];
+    let started=false;
+    function typeLine(lineIdx,charIdx,lineEl){
+      if(lineIdx>=lines.length){
+        const c=document.createElement('span');
+        c.className='terminal-cursor';
+        body.appendChild(c);
+        return;
+      }
+      const line=lines[lineIdx];
+      if(charIdx===0){
+        lineEl=document.createElement('div');
+        lineEl.className='terminal-line '+line.cls;
+        body.appendChild(lineEl);
+      }
+      if(charIdx<=line.text.length){
+        lineEl.textContent=line.text.slice(0,charIdx);
+        setTimeout(()=>typeLine(lineIdx,charIdx+1,lineEl),18+Math.random()*22);
+      } else {
+        setTimeout(()=>typeLine(lineIdx+1,0,null),280);
+      }
+    }
+    const termIO=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting && !started){
+          started=true;
+          typeLine(0,0,null);
+          termIO.disconnect();
+        }
+      });
+    },{threshold:0.4});
+    termIO.observe(wrap);
+  })();
+
+  /* ---------- Scroll storytelling variants ---------- */
+  (function storytelling(){
+    const targets=[
+      {sel:'.services-grid',cls:'reveal-mask'},
+      {sel:'.tech-constellation',cls:'reveal-blur'},
+      {sel:'.about-visual',cls:'reveal-perspective'},
+      {sel:'.cta-strip',cls:'reveal-scale'},
+      {sel:'.pricing-grid',cls:'reveal-blur'}
+    ];
+    const revealObs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
+    },{threshold:0.12,rootMargin:'0px 0px -60px 0px'});
+    targets.forEach(t=>{
+      const el=document.querySelector(t.sel);
+      if(el){el.classList.add(t.cls);revealObs.observe(el);}
+    });
+  })();
+
+  /* ---------- Subtle GSAP parallax ---------- */
+  if(typeof gsap!=='undefined' && !reduceMotion){
+    if(typeof ScrollTrigger!=='undefined')gsap.registerPlugin(ScrollTrigger);
+    gsap.to('.hero-headline',{
+      y:-30,ease:'none',
+      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:0.6}
+    });
+    gsap.to('.hero-orb.orb1',{
+      y:80,x:-30,ease:'none',
+      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:0.6}
+    });
+    gsap.to('.hero-orb.orb2',{
+      y:-60,x:40,ease:'none',
+      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:0.6}
+    });
+    gsap.to('.about-big-number',{
+      y:-40,ease:'none',
+      scrollTrigger:{trigger:'.about-visual',start:'top bottom',end:'bottom top',scrub:0.6}
+    });
+  }
+})();
 </script>
 </body>
 </html>
