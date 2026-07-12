@@ -1324,36 +1324,52 @@ window.addEventListener('scroll',()=>{
     tick();
   })();
 
-  /* ---------- Hero headline: character-by-character reveal ---------- */
-  (function headlineReveal(){
-    const el=document.getElementById('heroHeadline');
-    if(!el)return;
-    function wrap(node){
-      node.childNodes.forEach(child=>{
-        if(child.nodeType===3){
-          const frag=document.createDocumentFragment();
-          child.textContent.split('').forEach(ch=>{
-            const span=document.createElement('span');
-            span.className=ch===' '?'hl-char hl-space':'hl-char';
-            span.textContent=ch===' '?'\u00A0':ch;
-            span.style.opacity='0';
-            span.style.transform='translateY(0.6em) rotateX(-40deg)';
-            frag.appendChild(span);
-          });
-          child.replaceWith(frag);
-        } else if(child.nodeType===1){
-          wrap(child);
-        }
-      });
-    }
-    wrap(el);
-    const chars=el.querySelectorAll('.hl-char');
-    if(typeof gsap!=='undefined' && !reduceMotion){
-      gsap.to(chars,{opacity:1,y:0,rotateX:0,duration:0.7,ease:'power3.out',stagger:0.028,delay:0.15});
-    } else {
-      chars.forEach(c=>{c.style.opacity='1';c.style.transform='none';});
-    }
-  })();
+ /* ---------- Hero headline: character-by-character reveal ---------- */
+(function headlineReveal(){
+  const el = document.getElementById('heroHeadline');
+  if(!el) return;
+  
+  // 1. Manually clean text set kar rahe hain taaki HTML ka koi bhi invisible space layout kharab na kare
+  el.innerHTML = "We Build<br><em>What's</em><br>Next";
+  
+  function wrap(node){
+    Array.from(node.childNodes).forEach(child => {
+      if(child.nodeType === 3){
+        const text = child.textContent;
+        const frag = document.createDocumentFragment();
+        
+        text.split('').forEach(ch => {
+          const span = document.createElement('span');
+          span.className = 'hl-char';
+          
+          // Agar space hai, toh hum HTML entity (&nbsp;) use karenge taaki width perfect rahe
+          span.innerHTML = ch === ' ' ? '&nbsp;' : ch;
+          
+          // Glitch fix ke liye CSS pehle se apply kar dete hain
+          span.style.opacity = '0';
+          
+          frag.appendChild(span);
+        });
+        child.replaceWith(frag);
+      } else if(child.nodeType === 1 && child.tagName !== 'BR'){
+        wrap(child);
+      }
+    });
+  }
+  
+  wrap(el);
+  
+  const chars = el.querySelectorAll('.hl-char');
+  if(typeof gsap !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    // 2. Glitch hatane ke liye `fromTo` ka use jisse start frame ekdum smooth rahe
+    gsap.fromTo(chars, 
+      { opacity: 0, y: "0.6em", rotateX: -40 },
+      { opacity: 1, y: 0, rotateX: 0, duration: 0.7, ease: 'power3.out', stagger: 0.028, delay: 0.15 }
+    );
+  } else {
+    chars.forEach(c => { c.style.opacity = '1'; c.style.transform = 'none'; });
+  }
+})();
 
   /* ---------- Tech constellation orbit ---------- */
   (function techConstellation(){
