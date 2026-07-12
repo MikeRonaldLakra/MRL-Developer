@@ -256,14 +256,6 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
 .fade-up.delay-2{transition-delay:0.2s}
 .fade-up.delay-3{transition-delay:0.3s}
 .fade-up.delay-4{transition-delay:0.4s}
-/* ===== CURSOR ===== */
-.cursor-dot,.cursor-glow{position:fixed;top:0;left:0;pointer-events:none;z-index:2000;border-radius:50%;will-change:transform;opacity:0;transition:opacity 0.3s}
-.cursor-dot{width:8px;height:8px;background:var(--acid);transform:translate(-50%,-50%)}
-.cursor-glow{width:36px;height:36px;border:1px solid rgba(200,247,42,0.5);transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,border-color 0.25s,background 0.25s,opacity 0.3s}
-body.cursor-ready .cursor-dot,body.cursor-ready .cursor-glow{opacity:1}
-body.cursor-hover .cursor-glow{width:64px;height:64px;background:rgba(200,247,42,0.08);border-color:var(--acid)}
-body.cursor-hover .cursor-dot{opacity:0}
-@media(hover:none){.cursor-dot,.cursor-glow{display:none}}
 
 /* ===== HERO NETWORK CANVAS ===== */
 .hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.85;mask-image:linear-gradient(to bottom,transparent 0%,black 12%,black 78%,transparent 100%)}
@@ -345,7 +337,6 @@ body.cursor-hover .cursor-dot{opacity:0}
 @media(prefers-reduced-motion:reduce){
   .hero-canvas,.tech-constellation-canvas{display:none!important}
   .process-packet{display:none}
-  .cursor-dot,.cursor-glow{display:none}
   *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
 }
 
@@ -389,8 +380,6 @@ body.cursor-hover .cursor-dot{opacity:0}
 </head>
 <body>
 
-<div class="cursor-glow" id="cursorGlow"></div>
-<div class="cursor-dot" id="cursorDot"></div>
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#capabilities" onclick="closeMenu()">Capabilities</a>
@@ -1116,31 +1105,6 @@ window.addEventListener('scroll',()=>{
 (function(){
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouch = window.matchMedia('(hover: none)').matches;
-
-  /* ---------- Custom cursor ---------- */
-  if(!isTouch && !reduceMotion){
-    const dot=document.getElementById('cursorDot');
-    const glow=document.getElementById('cursorGlow');
-    let mx=0,my=0,gx=0,gy=0;
-    window.addEventListener('mousemove',e=>{
-      mx=e.clientX;my=e.clientY;
-      document.body.classList.add('cursor-ready');
-      dot.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;
-    });
-    function glowLoop(){
-      gx+=(mx-gx)*0.16;gy+=(my-gy)*0.16;
-      glow.style.transform=`translate(${gx}px,${gy}px) translate(-50%,-50%)`;
-      requestAnimationFrame(glowLoop);
-    }
-    glowLoop();
-    const hoverTargets='a, button, .service-card, .tech-pill, .price-card, .work-card, input, select, textarea';
-    document.addEventListener('mouseover',e=>{
-      if(e.target.closest(hoverTargets))document.body.classList.add('cursor-hover');
-    });
-    document.addEventListener('mouseout',e=>{
-      if(e.target.closest(hoverTargets))document.body.classList.remove('cursor-hover');
-    });
-  }
 
   /* ---------- Magnetic buttons + ripple ---------- */
   const magneticSelector='.btn-primary,.btn-ghost,.nav-cta,.btn-ink,.btn-ink-outline,.form-submit,.price-btn';
