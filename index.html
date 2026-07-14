@@ -122,7 +122,7 @@ section{padding:120px 60px;position:relative}
 .wc4 .deco{position:absolute;top:30px;left:30px;font-size:50px;opacity:0.1}
 .process-section{background:var(--ink2)}
 .process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:80px;position:relative}
-.process-steps::before{content:'absolute';top:40px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,247,42,0.3),transparent)}
+.process-steps::before{content:'';position:absolute;top:40px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,247,42,0.3),transparent)}
 .step-card{padding:48px 32px 40px;text-align:center;position:relative}
 .step-dot{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 32px;position:relative;font-size:20px}
 .step-dot::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(200,247,42,0.2)}
@@ -202,6 +202,7 @@ section{padding:120px 60px;position:relative}
 .about-values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
 .val-item{padding:20px;border-radius:12px;background:rgba(245,242,236,0.03);border:1px solid rgba(245,242,236,0.07)}
 .val-icon{font-size:20px;margin-bottom:10px}
+.val-icon img{width:32px;height:auto;display:block;} /* This prevents your custom images from blowing up the layout */
 .val-title{font-size:14px;font-weight:700;margin-bottom:4px}
 .val-desc{font-size:12px;color:var(--muted);line-height:1.5}
 .cta-strip{margin:0 60px;border-radius:24px;background:var(--acid);color:var(--ink);padding:80px 80px;display:flex;align-items:center;justify-content:space-between;gap:40px;position:relative;overflow:hidden}
@@ -833,6 +834,7 @@ footer{border-top:1px solid rgba(245,242,236,0.08);padding:80px 60px 40px}
         </div>
       </div>
     </div>
+
   </div>
 </section>
 <div style="padding:80px 0">
